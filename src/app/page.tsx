@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 import CarCard from "./components/CarCard";
 import LoadingIcon from "./components/Loading";
 import FilterBar from "./components/FilterBar";
@@ -26,7 +24,6 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 6;
-  const router = useRouter();
 
   useEffect(() => {
     const fetchCars = async () => {
