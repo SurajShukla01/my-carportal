@@ -1,103 +1,213 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import CarCard from "./components/CarCard";
+import LoadingIcon from "./components/Loading";
+import FilterBar from "./components/FilterBar";
+import DarkModeToggle from "./components/DarkModeToggle";
+
+import Car from "../types/Car";
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [filteredCars, setFilteredCars] = useState<Car[]>([]);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedFuel, setSelectedFuel] = useState("");
+  const [selectedSeating, setSelectedSeating] = useState("");
+  const [wishlist, setWishlist] = useState<string[]>([]);
+
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const carsPerPage = 6;
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const res = await fetch("/data/cars.json");
+        const data = await res.json();
+        setCars(data);
+        setFilteredCars(data);
+      } catch (error) {
+        console.error("Failed to fetch cars", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCars();
+
+    // Restore wishlist on page load
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        const storedWishlist = localStorage.getItem("wishlist");
+        if (storedWishlist) {
+          setWishlist(JSON.parse(storedWishlist));
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Initial load
+    const storedWishlist = localStorage.getItem("wishlist");
+    if (storedWishlist) {
+      setWishlist(JSON.parse(storedWishlist));
+    }
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  useEffect(() => {
+    let result = cars;
+
+    if (selectedBrand) {
+      result = result.filter((car) => car.brand === selectedBrand);
+    }
+
+    if (selectedFuel) {
+      result = result.filter((car) => car.fuelType === selectedFuel);
+    }
+
+    if (selectedSeating) {
+      result = result.filter(
+        (car) => car.seatingCapacity === Number(selectedSeating)
+      );
+    }
+
+    if (minPrice) {
+      result = result.filter((car) => car.price >= Number(minPrice));
+    }
+
+    if (maxPrice) {
+      result = result.filter((car) => car.price <= Number(maxPrice));
+    }
+
+    setFilteredCars(result);
+    setCurrentPage(1);
+  }, [selectedBrand, selectedFuel, minPrice, maxPrice, selectedSeating, cars]);
+
+  const uniqueBrands = [...new Set(cars.map((car) => car.brand))];
+  const uniqueFuels = [...new Set(cars.map((car) => car.fuelType))];
+  const uniqueSeatingCapacities = [
+    ...new Set(cars.map((car) => car.seatingCapacity)),
+  ].sort((a, b) => a - b);
+
+  const indexOfLastCar = currentPage * carsPerPage;
+  const indexOfFirstCar = indexOfLastCar - carsPerPage;
+  const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+
+  const toggleWishlist = (carId: string) => {
+    const updated = wishlist.includes(carId)
+      ? wishlist.filter((id) => id !== carId)
+      : [...wishlist, carId];
+
+    setWishlist(updated);
+    localStorage.setItem("wishlist", JSON.stringify(updated));
+  };
+
+  return (
+    <main className="px-24 py-28 bg-white text-black">
+      <h1 className="text-5xl font-bold mb-6">Car Finder</h1>
+      <FilterBar
+        brands={uniqueBrands}
+        fuelTypes={uniqueFuels}
+        selectedBrand={selectedBrand}
+        seatingOptions={uniqueSeatingCapacities}
+        selectedFuel={selectedFuel}
+        selectedSeating={selectedSeating}
+        onBrandChange={setSelectedBrand}
+        onFuelChange={setSelectedFuel}
+        onSeatingChange={setSelectedSeating}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+        onMinPriceChange={setMinPrice}
+        onMaxPriceChange={setMaxPrice}
+      />
+      <div>
+        <DarkModeToggle />
+        <Link
+          href="/wishlist"
+          className=" ml-4 bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+        >
+          View Wishlist
+        </Link>
+      </div>
+
+      {loading ? (
+        // <p>Loading cars...</p>
+        <div className="flex items-center justify-center">
+          <LoadingIcon />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      ) : (
+        <div className="px-16 py-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {currentCars.map((car) => (
+              <CarCard
+                key={car.id}
+                car={car}
+                isWishlisted={wishlist.includes(car.id)}
+                onToggleWishlist={toggleWishlist}
+              />
+            ))}
+          </div>
+          <div className="flex justify-center items-center mt-8 gap-2">
+            <button
+              className="px-4 py-2 rounded-md bg-gray-300 disabled:opacity-50"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+
+            {Array.from(
+              { length: Math.ceil(filteredCars.length / carsPerPage) },
+              (_, index) => (
+                <button
+                  key={index + 1}
+                  className={`px-4 py-2 rounded-md ${
+                    currentPage === index + 1
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200"
+                  }`}
+                  onClick={() => setCurrentPage(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+
+            <button
+              className="px-4 py-2 rounded-md bg-gray-300 disabled:opacity-50"
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  Math.min(
+                    prev + 1,
+                    Math.ceil(filteredCars.length / carsPerPage)
+                  )
+                )
+              }
+              disabled={
+                currentPage === Math.ceil(filteredCars.length / carsPerPage)
+              }
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+    </main>
   );
 }

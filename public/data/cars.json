@@ -1,0 +1,282 @@
+[
+  {
+    "id": "1",
+    "brand": "Toyota",
+    "model": "Camry",
+    "price": 25000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "15 km/l",
+      "engine": "2.5L"
+    }
+  },
+  {
+    "id": "2",
+    "brand": "Tesla",
+    "model": "Model 3",
+    "price": 42000,
+    "fuelType": "Electric",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "Electric Range: 400 km",
+      "engine": "Electric"
+    }
+  },
+  {
+    "id": "3",
+    "brand": "Hyundai",
+    "model": "i20",
+    "price": 12000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-244206.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "20 km/l",
+      "engine": "1.2L"
+    }
+  },
+  {
+    "id": "4",
+    "brand": "Ford",
+    "model": "Mustang",
+    "price": 55000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 4,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "10 km/l",
+      "engine": "5.0L V8"
+    }
+  },
+  {
+    "id": "5",
+    "brand": "BMW",
+    "model": "X5",
+    "price": 60000,
+    "fuelType": "Diesel",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "12 km/l",
+      "engine": "3.0L"
+    }
+  },
+  {
+    "id": "6",
+    "brand": "Kia",
+    "model": "Seltos",
+    "price": 18000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-244206.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "16 km/l",
+      "engine": "1.5L"
+    }
+  },
+  {
+    "id": "7",
+    "brand": "Audi",
+    "model": "A4",
+    "price": 45000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "14 km/l",
+      "engine": "2.0L"
+    }
+  },
+  {
+    "id": "8",
+    "brand": "Nissan",
+    "model": "Altima",
+    "price": 24000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "15 km/l",
+      "engine": "2.5L"
+    }
+  },
+  {
+    "id": "9",
+    "brand": "Chevrolet",
+    "model": "Bolt EV",
+    "price": 31000,
+    "fuelType": "Electric",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-244206.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "Electric Range: 416 km",
+      "engine": "Electric"
+    }
+  },
+  {
+    "id": "10",
+    "brand": "Honda",
+    "model": "Civic",
+    "price": 23000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "17 km/l",
+      "engine": "1.8L"
+    }
+  },
+  {
+    "id": "11",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class",
+    "price": 50000,
+    "fuelType": "Diesel",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "13 km/l",
+      "engine": "2.0L"
+    }
+  },
+  {
+    "id": "12",
+    "brand": "Volkswagen",
+    "model": "Golf",
+    "price": 20000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-244206.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "18 km/l",
+      "engine": "1.4L"
+    }
+  },
+  {
+    "id": "13",
+    "brand": "Mazda",
+    "model": "CX-5",
+    "price": 27000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "14 km/l",
+      "engine": "2.5L"
+    }
+  },
+  {
+    "id": "14",
+    "brand": "Renault",
+    "model": "Duster",
+    "price": 16000,
+    "fuelType": "Diesel",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "19 km/l",
+      "engine": "1.5L"
+    }
+  },
+  {
+    "id": "15",
+    "brand": "Skoda",
+    "model": "Octavia",
+    "price": 22000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-244206.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "17 km/l",
+      "engine": "1.8L"
+    }
+  },
+  {
+    "id": "16",
+    "brand": "Jeep",
+    "model": "Compass",
+    "price": 30000,
+    "fuelType": "Diesel",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "16 km/l",
+      "engine": "2.0L"
+    }
+  },
+  {
+    "id": "17",
+    "brand": "Volvo",
+    "model": "XC40 Recharge",
+    "price": 48000,
+    "fuelType": "Electric",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "Electric Range: 418 km",
+      "engine": "Electric"
+    }
+  },
+  {
+    "id": "18",
+    "brand": "MG",
+    "model": "ZS EV",
+    "price": 35000,
+    "fuelType": "Electric",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-244206.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "Electric Range: 419 km",
+      "engine": "Electric"
+    }
+  },
+  {
+    "id": "19",
+    "brand": "Maruti Suzuki",
+    "model": "Swift",
+    "price": 10000,
+    "fuelType": "Petrol",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-170811.jpg",
+    "specs": {
+      "transmission": "Manual",
+      "mileage": "21 km/l",
+      "engine": "1.2L"
+    }
+  },
+  {
+    "id": "20",
+    "brand": "Tata",
+    "model": "Nexon EV",
+    "price": 32000,
+    "fuelType": "Electric",
+    "seatingCapacity": 5,
+    "image": "/cars/pexels-mikebirdy-116675.jpg",
+    "specs": {
+      "transmission": "Automatic",
+      "mileage": "Electric Range: 312 km",
+      "engine": "Electric"
+    }
+  }
+]
